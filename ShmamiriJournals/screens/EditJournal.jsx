@@ -6,21 +6,25 @@ import AxiosService from "../services/AxiosService"
 import AuthenticationUtils from "../services/AuthenticationUtils"
 import FloatingMenuBar from "../components/FloatingMenuBar"
 import DropDownPicker from 'react-native-dropdown-picker';
+import { useRoute } from "@react-navigation/native"
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSave } from '@fortawesome/free-solid-svg-icons/faSave'
 
 const { height } = Dimensions.get('window');
 const TokenErrorMsg = "No access token or its expired you need to login"
 
-const NewJournal = ({navigation}) => {
+const EditJournal = ({navigation}) => {
   const inputHeight = height * 0.25; 
-  const [category, setSelectedCategory] = useState(null);
-  const [title, onChangeTitle] = useState('');
+  
+  const route = useRoute()
+  const journal = route.params?.journal
+  const [category, setSelectedCategory] = useState(journal.category);
+  const [title, onChangeTitle] = useState(journal.title);
+  const [content, onChangeContent] = useState(journal.content);
   const [open, setOpen] = useState(false);
-  const [content, onChangeContent] = useState("");
   const [postResponse, setLoginResponse] = useState(null)
   const [error, setError] = useState(false)
-  
+
   const [items, setItems] = useState([
     {label: 'Apple', value: 'apple'},
     {label: 'Banana', value: 'banana'},
@@ -29,19 +33,22 @@ const NewJournal = ({navigation}) => {
 
   const handlePost = async () => {
     const accessToken = await AuthenticationUtils.getAccessToken()
+    let navigateToScreen = "Journals"
+
     const headers= {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     }
     const data = {title: title, content: content, category: category}
     if (accessToken){
-      const response = await AxiosService.postDataToApi("new_journal",headers,data)
+      const response = await AxiosService.postDataToApi(`update_journal/${journal.id}`,headers,data)
       response.message !== undefined ? setLoginResponse(response.message) : null
-      navigation.navigate('Journals', {name: 'Journals',  token: accessToken }) 
     }else{
       setError({status: true, message: TokenErrorMsg})
-      navigation.navigate('Login', {name: 'Login', error: error }) 
+      navigateToScreen = "Login"
     }
+    navigation.navigate(navigateToScreen, { triggerHasFocused: true }) 
+
   };
 
   return (
@@ -235,4 +242,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default NewJournal;
+export default EditJournal;

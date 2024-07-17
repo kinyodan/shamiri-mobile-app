@@ -1,4 +1,3 @@
-import { apiClient } from './axios-config';
 import axios from 'axios';
 import { EXPO_PUBLIC_API_URL } from '@env';
 
@@ -25,7 +24,6 @@ export default {
   },
 
   async postDataToApi(path, headers, data={}) {   
-    console.log(headers)
     return await axios({
       method: "POST",
       url: `${api_url}/${path}`,

@@ -20,13 +20,12 @@ const SignUpView = () => {
   const [loginResponse, setLoginResponse] = useState()
 
   const showAlert = viewId => Alert.alert('Alert', 'Button pressed ' + viewId)
-   const  handlePost = async () => {
-    const data_f ={email: email["email"], name: username["username"],password: password["password"]}
-    setData(data_f)
-    const response =  await AxiosService.postDataToApi("sign_up",{},data_f)
-    console.log("response")
-    console.log(response)
-    setLoginResponse(response.message)
+      const  handlePost = async () => {
+      const data_f ={email: email["email"], name: username["username"],password: password["password"]}
+      setData(data_f)
+      const response =  await AxiosService.postDataToApi("sign_up",{},data_f)
+      setLoginResponse(response.message)
+      navigation.navigate('SignUp', {name: '', message: "Sign up successful" }) 
   };
 
   return (

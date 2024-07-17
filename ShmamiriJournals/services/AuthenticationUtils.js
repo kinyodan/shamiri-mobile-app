@@ -1,42 +1,61 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
- async function save(key, value) {
-    console.log("storeResponseToken")
+const storeData = async (key,value) => {
     try {
-          if (Platform.OS === 'android') {
-            await SecureStore.setItemAsync(key, value);
-          } else {
-            await AsyncStorage.setItem(key, value);
-          }
-      } catch (e) {
-        console.log(a)
+      await AsyncStorage.setItem(key, value);
+    } catch (e) {
+      // saving error
+    }
+  };
+
+  const getData = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        return value
       }
-  }
+    } catch (e) {
+      return false
+    }
+  };
 
 export default {
-    storeResponseToken(response){
+    setResponseToken(response){
         if (response.status){
             if(response.access_token !== undefined){
-                save("access_token",response.access_token)
+                storeData("access_token", response.access_token)
+               return response.access_token
+            }else{
+                return false
             }
         }
     },
 
-    async getAccessToken(){
-          let value = false
-          if (Platform.OS === 'android') {
-            value = await SecureStore.getItemAsync("access_token");
-          } else {
-            value = await AsyncStorage.getItem("access_token");
+  async getAccessToken(){
+      const token = await getData("access_token")
+      return token ? token : false 
+  },
+
+  setResponseData(response){
+      if (response.status){
+          if(response.data !== undefined){
+              storeData("user_name", response.data[0])
+              storeData("user_email", response.data[1])
+
+             return response.data
+          }else{
+              return false
           }
-        console.log(value)
-        console.log("getAccessToken")
-        if (value !== null) {
-            return value
-        }else{
-            return false
-        }    
+      }
+  },
 
-    }
-
+  async getResponseData(){
+    const userName = await getData("user_name")
+    const userEmail = await getData("user_email")
+    const data= {userName: userName, email: userEmail}
+    console.log(data)
+    return userEmail ? data : false 
+  }
 }
+
+

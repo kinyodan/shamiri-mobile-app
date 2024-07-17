@@ -10,8 +10,9 @@ import {
 } from 'react-native'
 import AxiosService from '../services/AxiosService'
 import AuthenticationUtils from '../services/AuthenticationUtils'
-import JournalUtils from '../services/JournalUtils'
 import axios from 'axios'
+import { EXPO_PUBLIC_API_URL } from '@env';
+
 
 const LoginView = ({ navigation }) => {
   
@@ -19,45 +20,31 @@ const LoginView = ({ navigation }) => {
   const [password, setPassword] = useState()
   const [loginResponse, setLoginResponse] = useState()
   const [error, setError] = useState('');
+  const [journals, setjournals] = useState(false)
 
   const showAlert = viewId => Alert.alert('Alert', 'Button pressed ' + viewId)
 
   const getJournals = async (accessToken)=>{
-    const headers =  {
-      'Authorization': `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-    }
-     
-      const options = {
-        method: "POST",
+      const response = await axios.get(`${EXPO_PUBLIC_API_URL}/list_journals`, {
         headers: {
-          Accept: "application/json",
+          'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json;charset=UTF-8",
         },
-        body: JSON.stringify({
-          limit: 100,
-          
-        }),
-      };
-      
-      fetch("http://0.0.0.0:8000/list_journals", options)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("POST request successful. Response:", data);
-        });
-  
+      });
+      return response.data.data ? response.data.data : false
   }
 
-   const handlePost = async () => {
+  const handlePost = async () => {
     const data_f ={email: email["email"], password: password["password"]}
     const response = await AxiosService.postDataToApi("login",{},data_f)
     response.message !== undefined ? setLoginResponse(response.message) : null
 
-    AuthenticationUtils.storeResponseToken(response)
-    const accessToken = await AuthenticationUtils.getAccessToken()
-    console.log(accessToken)
-    accessToken ? navigation.navigate('Journals', {name: 'Journals'}) : null
+    const accessToken = AuthenticationUtils.setResponseToken(response)
+    const ResponseData = AuthenticationUtils.setResponseData(response)
+
+    const journals = await getJournals(accessToken)
+    setjournals(journals);
+    accessToken ? navigation.navigate('Journals', {name: 'Journals', journals: journals, token: accessToken }) : null
   };
 
   return (

@@ -1,14 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import {KeyboardAvoidingView,ImageBackground, StyleSheet, Text, View,ActivityIndicator } from 'react-native';
+import './lib/gesture-handler';
+import {StyleSheet, View,ActivityIndicator,StatusBar } from 'react-native';
 import axios from 'axios';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { EXPO_PUBLIC_API_URL } from '@env';
 import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginView from "./screens/LoginView"
-import JournalListCard from './screens/JournalListCard';
+import JournalsList from './screens/JournalsList';
 import SignUpView from './screens/SignUpView'
+import SettingsView from "./screens/SettingsView"
+import NewJournal from "./screens/NewJournal"
+import Journal from "./screens/Journal"
+import FilterJournals from "./screens/FilterJournals"
+import Categories from "./screens/Categories"
+import EditJournal from "./screens/EditJournal"
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faSquareCheck } from '@fortawesome/free-solid-svg-icons/faSquareCheck'
+import { faSave } from '@fortawesome/free-solid-svg-icons/faSave'
+
+library.add(fab, faSquareCheck,faSave)
+
 const image = { uri: "https://docs.expo.dev/static/images/tutorial/background-image.png" };
 
+
+const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -22,7 +40,7 @@ export default function App() {
       try {
         const response = await axios.get(`${EXPO_PUBLIC_API_URL}/`, {
           headers: {
-            Authorization: ``, // Add token if needed
+            Authorization: ``, 
             'Content-Type': 'application/json',
           },
         });
@@ -40,7 +58,6 @@ export default function App() {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
-
   if (error) {
     return (
       <View style={styles.container}>
@@ -50,13 +67,37 @@ export default function App() {
   }
 
   return (
-   <NavigationContainer>
+        <SafeAreaProvider>
+          <StatusBar />
+          <NavigationContainer>
+            <RootNavigator />
+          </NavigationContainer>
+        </SafeAreaProvider>
+  );
+
+}
+
+const RootNavigator = () => {
+  return (
+    <Drawer.Navigator initialRouteName="-">
+      <Drawer.Screen name="-" component={MainStackNavigator} />
+      <Drawer.Screen name="Settings" component={SettingsView} />
+    </Drawer.Navigator>
+  );
+};
+
+const MainStackNavigator = () => {
+  return (
     <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen name="Login" component={LoginView} />
-      <Stack.Screen name="SignUp" component={SignUpView} />
-      <Stack.Screen name="Journals" component={JournalListCard} />
+      <Stack.Screen name="Login" component={LoginView} options={{ headerShown: false }} />
+      <Stack.Screen name="SignUp" component={SignUpView} options={{ headerShown: false }} />
+      <Stack.Screen name="Journals" component={JournalsList} options={{ headerShown: false }} />
+      <Stack.Screen name="NewJournal" component={NewJournal} options={{ headerShown: false }} />
+      <Stack.Screen name="EditJournal" component={EditJournal} options={{ headerShown: false }} />
+      <Stack.Screen name="Journal" component={Journal} options={{ headerShown: false }} />
+      <Stack.Screen name="FilterJournals" component={FilterJournals} options={{ headerShown: false }} />
+      <Stack.Screen name="Categories" component={Categories} options={{ headerShown: false }} />
     </Stack.Navigator>
-  </NavigationContainer>
   );
 }
 
