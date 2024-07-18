@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './lib/gesture-handler';
-import {StyleSheet, View,ActivityIndicator,StatusBar } from 'react-native';
+import {StyleSheet, View,ActivityIndicator,StatusBar ,Button} from 'react-native';
 import axios from 'axios';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { EXPO_PUBLIC_API_URL } from '@env';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
+import AuthenticationUtils from './services/AuthenticationUtils'
+import globalStyles from './styles'
 import LoginView from "./screens/LoginView"
 import JournalsList from './screens/JournalsList';
 import SignUpView from './screens/SignUpView'
@@ -25,7 +27,6 @@ library.add(fab, faSquareCheck,faSave)
 
 const image = { uri: "https://docs.expo.dev/static/images/tutorial/background-image.png" };
 
-
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -34,6 +35,7 @@ export default function App() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isStoredToken, setisStoredToken] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +56,16 @@ export default function App() {
     fetchData();
   }, []);
 
+
+  useEffect(() => {
+    const checkSToredToken = async () => {
+      const isStoredToken = await AuthenticationUtils.getAccessToken()
+      isStoredToken ? setisStoredToken(true) : false
+
+    }
+    checkSToredToken()
+  }, []); 
+
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
@@ -67,26 +79,46 @@ export default function App() {
   }
 
   return (
-        <SafeAreaProvider>
-          <StatusBar />
-          <NavigationContainer>
-            <RootNavigator />
-          </NavigationContainer>
-        </SafeAreaProvider>
+    <SafeAreaProvider>
+      <StatusBar />
+      <NavigationContainer>
+        <RootNavigator isStoredToken={isStoredToken} />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 
 }
 
 const RootNavigator = () => {
+    let screenOptions = {
+      headerShown: false,
+      headerTransparent:true
+    }
+
   return (
-    <Drawer.Navigator initialRouteName="-">
-      <Drawer.Screen name="-" component={MainStackNavigator} />
-      <Drawer.Screen name="Settings" component={SettingsView} />
+    <Drawer.Navigator initialRouteName="-" screenOptions={screenOptions}>
+        <Drawer.Screen name="-" component={MainStackNavigator} 
+        options={({ navigation }) => ({
+          title: '.',
+          headerRight: () => (
+            <Button
+              onPress={() => handleLogout(navigation)}
+              title="Logout"
+              color='darkgrey'
+              style={styles.logout}
+            />
+          ),
+          })}
+        />
+        <Drawer.Screen name="Settings" component={SettingsView} />
+        <Stack.Screen name="Login" component={LoginView} options={{ headerShown: false }} />
+        <Stack.Screen name="SignUp" component={SignUpView} options={{ headerShown: false }} />
     </Drawer.Navigator>
   );
 };
 
 const MainStackNavigator = () => {
+
   return (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Login" component={LoginView} options={{ headerShown: false }} />
@@ -130,6 +162,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: '100%',
     marginBottom: 20,
+  },
+  logout:{
+    paddingRight:10,
+    margin: 10,
+    borderRadius:8
+  },
+  scrollView:{
+    height: 785,
   },
 
 });

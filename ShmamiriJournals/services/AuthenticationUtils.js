@@ -19,6 +19,16 @@ const storeData = async (key,value) => {
     }
   };
 
+  const removeItemValue  = async (key) => {
+    try {
+        await AsyncStorage.removeItem(key);
+        return true;
+    }
+    catch(exception) {
+        return false;
+    }
+  }
+
 export default {
     setResponseToken(response){
         if (response.status){
@@ -55,7 +65,13 @@ export default {
     const data= {userName: userName, email: userEmail}
     console.log(data)
     return userEmail ? data : false 
+  },
+
+  async removeStoredToken(){
+    const isRemoved = await removeItemValue('access_token')
+    return isRemoved ? true : false
   }
+
 }
 
 

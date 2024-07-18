@@ -3,12 +3,14 @@ import React from 'react';
 import { View, Text, TextInput ,StyleSheet,ScrollView,TouchableOpacity , Dimensions } from 'react-native';
 import { useState } from 'react';
 import AxiosService from "../services/AxiosService"
+import globalStyles from "../styles"
 import AuthenticationUtils from "../services/AuthenticationUtils"
 import FloatingMenuBar from "../components/FloatingMenuBar"
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useRoute } from "@react-navigation/native"
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSave } from '@fortawesome/free-solid-svg-icons/faSave'
+import TopBar from '../components/TopBar'
 
 const { height } = Dimensions.get('window');
 const TokenErrorMsg = "No access token or its expired you need to login"
@@ -53,7 +55,8 @@ const EditJournal = ({navigation}) => {
 
   return (
     <View>
-      <ScrollView style={styles.scrollView}>
+      <TopBar navigation={navigation} />
+      <ScrollView style={globalStyles.scrollView }>
         <TextInput
           placeholder="Title"
           style={styles.normalInput}
@@ -112,10 +115,9 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginRight: 16,
     zIndex: 1,
-
   },
   scrollView:{
-    height: 720,
+    height: 785,
     marginLeft:16,
     marginRight:16,
   },

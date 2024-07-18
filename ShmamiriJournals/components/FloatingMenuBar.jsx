@@ -25,6 +25,10 @@ const TopMenuBar = ({navigation}) => {
           <TouchableOpacity style={styles.menuItem} onPress={() => handlePress('FilterJournals')}>
             <Icon name="filter" size={24} color="darkgrey" />
             <Text style={styles.menuItemText}>Filter</Text>
+          </TouchableOpacity>          
+          <TouchableOpacity style={styles.menuItem} onPress={() => handlePress('Settings')}>
+            <Icon name="gears" size={24} color="darkgrey" />
+            <Text style={styles.menuItemText}>Settings</Text>
           </TouchableOpacity>
         </View>
       </View>

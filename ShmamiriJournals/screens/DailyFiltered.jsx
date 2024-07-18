@@ -18,7 +18,6 @@ const DailyFiltered = ({ navigation }) => {
     
               if (accessToken){
                 const journals = await journalsService.getJournalsFIlteredByDaily(accessToken)
-                console.log(journals)
                 journals ? setjournals(journals) : null
           
               }else{
