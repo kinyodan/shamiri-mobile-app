@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: 150,
     borderRadius: 30,
-    backgroundColor: '#00b5ec',
+    backgroundColor: 'purple',
   },
   buttonText: {
     color: '#ffffff', 

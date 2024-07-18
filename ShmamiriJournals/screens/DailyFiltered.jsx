@@ -33,7 +33,7 @@ const DailyFiltered = ({ navigation }) => {
     )
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.container}>
             <View style={styles.container}>
@@ -49,10 +49,10 @@ const DailyFiltered = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingHorizontal: 20,
-    },
+  container: {
+    flex: 1,
+    paddingHorizontal: 10,
+  },
     scrollView:{
       height: 320,
     },
