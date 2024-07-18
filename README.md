@@ -19,7 +19,7 @@ A mobile application and a backend service for personal journaling. Users should
 ### Installing
 
 * Clone this reposiroty into your local machine ( repo link https://github.com/kinyodan/shamiri-mobile-app.git )
-* CD into the cloned repository folder and then CD into the cloned folder
+* CD into the cloned repository folder
 * Run below commands 
 
 ### Executing program
@@ -30,7 +30,7 @@ A mobile application and a backend service for personal journaling. Users should
 ```
 * Start the Expo application 
 ```
-npxc expo start
+ npx expo start
 ```
 * There are several other ways to run the application including on your Mobile device as documented here; <a href='https://docs.expo.dev/tutorial/eas/introduction/'>Expo documentation on running the application</a>
 
