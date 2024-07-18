@@ -32,7 +32,7 @@ const MonthlyFiltered = ({ navigation }) => {
     )
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.container}>
             <View style={styles.container}>

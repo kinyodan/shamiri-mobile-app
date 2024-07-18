@@ -83,15 +83,6 @@ const LoginView = ({ navigation }) => {
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
 
-      <View><Text>{loginResponse}</Text></View>
-        <View><Text>{error}{loginResponse}</Text></View>
-
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => showAlert('forgot password')}>
-        <Text>Forgot your password?</Text>
-      </TouchableOpacity>
-
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={() =>
@@ -151,7 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   loginButton: {
-    backgroundColor: '#00b5ec',
+    backgroundColor: 'purple',
   },
   loginText: {
     color: 'white',
