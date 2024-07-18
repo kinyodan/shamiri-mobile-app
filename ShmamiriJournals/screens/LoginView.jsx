@@ -38,6 +38,7 @@ const LoginView = ({ navigation }) => {
     const data_f ={email: email["email"], password: password["password"]}
     const response = await AxiosService.postDataToApi("login",{},data_f)
     response.message !== undefined ? setLoginResponse(response.message) : null
+    response.error !== undefined ? setError(response.error.message) : null
 
     const accessToken = AuthenticationUtils.setResponseToken(response)
     const ResponseData = AuthenticationUtils.setResponseData(response)
@@ -82,6 +83,9 @@ const LoginView = ({ navigation }) => {
         onPress={()=> handlePost()}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
+
+      <Text style={styles.successMessage}>{loginResponse}</Text>
+      <Text style={styles.errorMessage}>{error}</Text>
 
       <TouchableOpacity
         style={styles.buttonContainer}
@@ -146,6 +150,16 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: 'white',
+  },
+  successMessage: {
+    fontSize: 16,
+    color: 'green',
+    marginBottom: 8,
+  },
+  errorMessage: {
+    fontSize: 16,
+    color: 'red',
+    marginBottom: 8,
   },
 })
 
