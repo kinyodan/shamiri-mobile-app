@@ -12,8 +12,9 @@ A mobile application and a backend service for personal journaling. Users should
 
 ### Dependencies
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+* Node version used in dvelopemnt; Node v20.12.2.
+* Development framework is Raect Native (Javascript) no typescript
+* Developed using Expo
 
 ### Installing
 
