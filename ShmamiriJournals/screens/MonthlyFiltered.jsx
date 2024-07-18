@@ -50,7 +50,7 @@ const MonthlyFiltered = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingHorizontal: 20,
+      paddingHorizontal: 10,
     },
     scrollView:{
       height: 320,
