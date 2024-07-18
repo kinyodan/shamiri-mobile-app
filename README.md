@@ -14,27 +14,25 @@ A mobile application and a backend service for personal journaling. Users should
 
 * Node version used in dvelopemnt; Node v20.12.2.
 * Development framework is Raect Native (Javascript) no typescript
-* Developed using Expo
+* Developed using Expo <a href='https://docs.expo.dev/tutorial/create-your-first-app/'> find Expo documentation here </a> 
 
 ### Installing
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+* Clone this reposiroty into your local machine ( repo link https://github.com/kinyodan/shamiri-mobile-app.git )
+* CD into the cloned repository folder and then CD into the cloned folder
+* Run below commands 
 
 ### Executing program
 
-* How to run the program
-* Step-by-step bullets
+* To install modules 
 ```
-code blocks for commands
+ npm install 
 ```
-
-## Help
-
-Any advise for common problems or issues.
+* Start the Expo application 
 ```
-command to run if program contains helper info
+npxc expo start
 ```
+* There are several other ways to run the application including on your Mobile device as documented here; <a href='https://docs.expo.dev/tutorial/eas/introduction/'>Expo documentation on running the application</a>
 
 ## Backend Api
 
