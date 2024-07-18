@@ -4,10 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const TopMenuBar = ({navigation}) => {
       const handlePress = (screenName) => {
-        // Handle navigation or screen switching logic here
-        console.log(`Navigate to ${screenName}`);
         navigation.navigate(screenName, {name: screenName, navigation: navigation })
-
       };
     
       return (

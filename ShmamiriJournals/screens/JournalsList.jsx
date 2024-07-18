@@ -29,13 +29,16 @@ const JournalsList = ({navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       if (!hasFocused) {
+        setLoading(true)
         const fetchData = async () => {
           const accessToken = await AuthenticationUtils.getAccessToken()
           if (accessToken){
             const journals = await journalsService.getJournals(accessToken)
             setjournals(journals)
+            setLoading(false)
       
           }else{
+            setLoading(false)
             setError({status: true, message: TokenErrorMsg})
             navigation.navigate('Login', {name: 'Login', error: error }) 
           }
@@ -75,7 +78,7 @@ const JournalsList = ({navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   card: {
     width: '100%',

@@ -5,6 +5,7 @@ import { useRoute, useFocusEffect } from "@react-navigation/native"
 import JournalCard from "../components/JournalCard"
 import AuthenticationUtils from '../services/AuthenticationUtils';
 import journalsService from '../services/journalsService'
+import NoData from "../components/NoData"
 
 const DailyFiltered = ({ navigation }) => {
     const [hasFocused, setHasFocused] = useState(false);
@@ -35,6 +36,7 @@ const DailyFiltered = ({ navigation }) => {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.container}>
+           {journals.length === 0 ? <NoData /> : null}
             <View style={styles.container}>
               {journals.map((item) => 
                 <JournalCard key={item.id} item={item} navigation={navigation}/>

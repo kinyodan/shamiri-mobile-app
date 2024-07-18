@@ -24,9 +24,9 @@ const NewJournal = ({navigation}) => {
   const [error, setError] = useState(false)
   
   const [items, setItems] = useState([
-    {label: 'Apple', value: 'apple'},
-    {label: 'Banana', value: 'banana'},
-    {label: 'Pear', value: 'pear'},
+    {label: 'Personal', value: 'Personal'},
+    {label: 'Work', value: 'Work'},
+    {label: 'Travel', value: 'Travel'},
 ] );
 
   const handlePost = async () => {
