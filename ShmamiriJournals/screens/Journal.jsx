@@ -46,6 +46,7 @@ const Journal = ({navigation, item }) => {
 
   return (
       <SafeAreaView style={styles.safeArea}>
+        <TopBar navigation={navigation} />
         <ScrollView style={styles.scrollView}>
            <View style={styles.container}>
               <View style={styles.titleView}>
@@ -89,7 +90,7 @@ const Journal = ({navigation, item }) => {
 
 const styles = StyleSheet.create({
     scrollView:{
-      height: 720
+      height: 785,
     },
     titleView: {
       flex: 1,

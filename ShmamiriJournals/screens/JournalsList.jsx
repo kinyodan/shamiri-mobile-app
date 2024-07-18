@@ -3,11 +3,13 @@ import { View, Text, StyleSheet,ScrollView,TouchableOpacity } from 'react-native
 import { useState } from 'react';
 import { useRoute, useFocusEffect } from "@react-navigation/native"
 import FloatingMenuBar from "../components/FloatingMenuBar"
+import globalStyles from "../styles"
 import JournalCard from "../components/JournalCard"
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AuthenticationUtils from '../services/AuthenticationUtils';
 import journalsService from '../services/journalsService'
- 
+import TopBar from '../components/TopBar'
+
 const JournalsList = ({navigation }) => {
 
   const route = useRoute()
@@ -50,7 +52,8 @@ const JournalsList = ({navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView}>
+      <TopBar navigation={navigation} />
+      <ScrollView style={globalStyles.scrollView }>
         <View style={styles.container}>
             <View style={styles.container}>
               {local_journals.map((item) => 
@@ -73,9 +76,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-  },
-  scrollView:{
-    height: 720
   },
   card: {
     width: '100%',

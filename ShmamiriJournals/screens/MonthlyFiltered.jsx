@@ -17,7 +17,6 @@ const MonthlyFiltered = ({ navigation }) => {
               const accessToken = await AuthenticationUtils.getAccessToken()
               if (accessToken){
                 const journals = await journalsService.getJournalsFIlteredByMonthly(accessToken)
-                console.log(journals)
                 journals ? setjournals(journals) : null
           
               }else{

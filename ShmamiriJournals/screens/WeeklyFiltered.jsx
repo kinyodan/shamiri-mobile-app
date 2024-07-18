@@ -16,10 +16,8 @@ const WeeklyFiltered = ({ navigation }) => {
           if (!hasFocused) {
             const fetchData = async () => {
               const accessToken = await AuthenticationUtils.getAccessToken()
-    
               if (accessToken){
                 const journals = await journalsService.getJournalsFIlteredByWeekly(accessToken)
-                console.log(journals)
                 journals ? setjournals(journals) : null
           
               }else{
@@ -55,7 +53,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
     },
     scrollView:{
-      height: 720,
+      height: 785,
     },
     card: {
       width: '100%',

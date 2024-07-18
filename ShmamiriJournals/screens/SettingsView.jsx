@@ -7,11 +7,14 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ScrollView
 } from 'react-native'
 import { useFocusEffect } from "@react-navigation/native"
 import AxiosService from '../services/AxiosService'
 import FloatingMenuBar from '../components/FloatingMenuBar'
 import AuthenticationUtils from '../services/AuthenticationUtils'
+import globalStyles from "../styles"
+import TopBar from '../components/TopBar'
 
 const userDataErrorMsg = "Problem retrieving user Details login Needed"
 
@@ -62,6 +65,8 @@ const SettingsView = ({navigation}) => {
   };
 
   return (
+    <>
+    <TopBar navigation={navigation} />
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <Image
@@ -96,23 +101,25 @@ const SettingsView = ({navigation}) => {
         onPress={() => handlePost()}>
         <Text style={styles.loginText}>Save</Text>
       </TouchableOpacity>
-      
       <FloatingMenuBar navigation={navigation}/>
     </View>
+    </>    
+
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    position: "absolute",
     backgroundColor: '#FFFFFF',
+    height: 720,
+    marginBottom: 20,
   },
   container: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    height: 720,
+    marginBottom: 20,
+
   },
   inputContainer: {
     borderBottomColor: '#F5FCFF',
@@ -122,6 +129,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 45,
     marginBottom: 20,
+    justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -132,7 +140,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
-
   },
   inputIcon: {
     width: 30,
@@ -150,7 +157,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   loginButton: {
-    backgroundColor: '#00b5ec',
+    backgroundColor: 'purple',
   },
   loginText: {
     color: 'white',
